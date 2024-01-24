@@ -16,6 +16,38 @@ def input(request):
     return(render(request, "input.html"))
 
 def status(request):
+    docker_container = subprocess.check_output("sudo docker ps | grep -v 'CONTAINER ID' | wc -l", shell=True, universal_newlines=True)
+    total_docker_container = subprocess.check_output("sudo docker ps -a | grep -v 'CONTAINER ID' | wc -l", shell=True, universal_newlines=True)
+    docker_images = subprocess.check_output("sudo docker images | grep -v 'IMAGE ID' | wc -l", shell=True, universal_newlines=True)
+    docker_networks = subprocess.check_output("sudo docker network ls | grep -v NAME | awk {'print $2'} | grep -Ev 'bridge|none|host' | wc -l", shell=True, universal_newlines=True)
+    docker_volumes = subprocess.check_output("sudo docker volume ls | grep -v DRIVER | wc -l", shell=True, universal_newlines=True)
+    return(render(request, "status.html", {"docker_container": docker_container, "total_docker_container": total_docker_container, "docker_images": docker_images, "docker_volumes": docker_volumes, "docker_networks" : docker_networks}))
+
+def stop(request):
+    docker_container = subprocess.check_output("sudo docker ps -a | grep -v 'CONTAINER ID' | wc -l", shell=True, universal_newlines=True)
+    if (int(docker_container) == 0):
+        pass
+    else:
+        subprocess.check_output("docker ps -a | grep -v NAMES | awk {'print $1'} | xargs docker rm -f", shell=True, universal_newlines=True)
+
+    docker_images = subprocess.check_output("sudo docker images | grep -v 'IMAGE ID' | wc -l", shell=True, universal_newlines=True)
+    if (int(docker_images) == 0):
+        pass
+    else:
+        subprocess.check_output("docker images | grep -v SIZE | awk {'print $3'} | xargs docker rmi -f", shell=True, universal_newlines=True)
+
+    docker_volumes = subprocess.check_output("sudo docker volume ls | grep -v DRIVER | wc -l", shell=True, universal_newlines=True)
+    if (int(docker_volumes) == 0):
+        pass
+    else:
+        subprocess.check_output("docker volume ls | grep -v NAME | awk {'print $2'} | xargs docker volume rm", shell=True, universal_newlines=True)
+
+    docker_networks = subprocess.check_output("sudo docker network ls | grep -v NAME | awk {'print $2'} | grep -Ev 'bridge|none|host' | wc -l", shell=True, universal_newlines=True)
+    if (int(docker_networks) == 0):
+        pass
+    else:
+        subprocess.check_output("docker network ls | grep -v NAME | awk {'print $2'} | grep -v bridge | grep -v none | grep -v host | xargs docker network rm", shell=True, universal_newlines=True)
+    
     return(render(request, "status.html"))
 
 def result(request):
