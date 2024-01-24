@@ -64,13 +64,13 @@ def result(request):
 
         if (text1=='apache'):
             if (text2=='create'):
-                subprocess.call("echo | tee /var/log/ad.log; cd automation_devops/apache_project_docker; docker-compose up -d &", shell=True)
+                subprocess.call("echo | tee logs/ad.log; cd automation_devops/apache_project_docker; docker-compose up -d &", shell=True)
                 text1 = "Default port for Apache is 80 & 443. Type <IP>:80 in the browser to access Apache"
                 return(render(request, "result1.html", {"htmlcode": "Apache", "html": "CREATED", "text1": text1 }))            
 
             elif (text2=='destroy'):
                 subprocess.call("cd automation_devops/apache_project_docker; docker-compose down --rmi all &", shell=True)
-                subprocess.call("cp /var/log/ad.log /var/log/ad_apache.log", shell=True)
+                subprocess.call("cp logs/ad.log logs/ad_apache.log", shell=True)
                 text = "It may take few seconds to destroy the environment, Thank You"
                 return(render(request, "result2.html", {"htmlcode": "Apache", "html": "DESTROYED", "text": text }))
 
@@ -78,7 +78,7 @@ def result(request):
                 subprocess.call("docker exec -it apacheserver /bin/bash", shell=True)
                 return(render(request, "thankyou.html"))        
         
-            elif (text2=='connectivity'):
+            '''elif (text2=='connectivity'):
                 test = subprocess.check_output("docker network inspect apache_project_docker_apache_network | grep -A 4 apacheserver | grep IPv4Address", shell=True, universal_newlines=True)
                 s1 = re.compile(r'[0-9.]+/')
                 m1 = s1.search(test)
@@ -96,17 +96,17 @@ def result(request):
                 print("Apache container logs as below : ")
                 subprocess.call("docker logs apacheserver", shell=True)
                 print("========================================================")
-                return(render(request, "thankyou.html"))
+                return(render(request, "thankyou.html"))'''
 
         elif (text1=='ansible'):
             if (text2=='create'):
-                subprocess.call("echo | tee /var/log/ad.log; cd automation_devops/ansible_project_docker && docker-compose up -d &", shell=True)
+                subprocess.call("echo | tee logs/ad.log; cd automation_devops/ansible_project_docker && docker-compose up -d &", shell=True)
                 text1 = "Ansible usually connects passwordless through port 22. Login to ansible server to work on it"
                 return(render(request, "result1.html", {"htmlcode": "Ansible", "html": "CREATED", "text1": text1 }))
 
             elif (text2=='destroy'):
                 subprocess.call("cd automation_devops/ansible_project_docker && docker-compose down --rmi all &", shell=True)
-                subprocess.call("cp /var/log/ad.log /var/log/ad_ansible.log", shell=True)
+                subprocess.call("cp logs/ad.log logs/ad_ansible.log", shell=True)
                 text = "It may take few seconds to destroy the environment, Thank You"
                 return(render(request, "result2.html", {"htmlcode": "Ansible", "html": "DESTROYED", "text": text }))
 
@@ -114,7 +114,7 @@ def result(request):
                 subprocess.call("docker exec -it ansibleserver /bin/bash", shell=True)
                 return(render(request, "thankyou.html"))
 
-            elif (text2=='connectivity'):
+            '''elif (text2=='connectivity'):
                 test = subprocess.check_output("docker network inspect ansible_project_docker_ansible_network | grep -A 4 ansibleserver | grep IPv4Address", shell=True, universal_newlines=True)
                 s1 = re.compile(r'[0-9.]+/')
                 m1 = s1.search(test)
@@ -151,17 +151,17 @@ def result(request):
                 print("Amazon container logs as below : ")
                 subprocess.call("docker logs amazonlinuxhost", shell=True)
                 print("========================================================")
-                return(render(request, "thankyou.html"))
+                return(render(request, "thankyou.html"))'''
 
         elif (text1=='aws'):
             if (text2=='create'):
-                subprocess.call("echo | tee /var/log/ad.log; cd automation_devops/aws_project_docker && docker-compose up -d &", shell=True)
+                subprocess.call("echo | tee logs/ad.log; cd automation_devops/aws_project_docker && docker-compose up -d &", shell=True)
                 text1 = "AWS CLI is just aws command. Login to AWS container to work on it"
                 return(render(request, "result1.html", {"htmlcode": "AWS", "html": "CREATED", "text1": text1 }))
 
             elif (text2=='destroy'):
                 subprocess.call("cd automation_devops/aws_project_docker && docker-compose down --rmi all &", shell=True)
-                subprocess.call("cp /var/log/ad.log /var/log/ad_aws.log", shell=True)
+                subprocess.call("cp logs/ad.log logs/ad_aws.log", shell=True)
                 text = "It may take few seconds to destroy the environment, Thank You"
                 return(render(request, "result2.html", {"htmlcode": "AWS", "html": "DESTROYED", "text": text }))
         
@@ -169,7 +169,7 @@ def result(request):
                 subprocess.call("docker exec -it awsserver /bin/bash", shell=True)
                 return(render(request, "thankyou.html"))
         
-            elif (text2=='connectivity'):
+            '''elif (text2=='connectivity'):
                 print("========================================================")
                 print("AWS CLI is not running as service, hence it will not open any port. It is just Software.")
                 return(render(request, "thankyou.html"))
@@ -180,17 +180,17 @@ def result(request):
                 print("AWS container logs as below : ")
                 subprocess.call("docker logs awsserver", shell=True)
                 print("========================================================")
-                return(render(request, "thankyou.html"))
+                return(render(request, "thankyou.html"))'''
         
         elif (text1=='django'):
             if (text2=='create'):
-                subprocess.call("echo | tee /var/log/ad.log; cd automation_devops/django_project_docker && docker-compose up -d &", shell=True)
+                subprocess.call("echo | tee logs/ad.log; cd automation_devops/django_project_docker && docker-compose up -d &", shell=True)
                 text1 = "Default port for Django is 8000. Type <IP>:8000 in the browser to access Django"
                 return(render(request, "result1.html", {"htmlcode": "DJANGO", "html": "CREATED", "text1": text1 }))
 
             elif (text2=='destroy'):
                 subprocess.call("cd automation_devops/django_project_docker && docker-compose down --rmi all &", shell=True)
-                subprocess.call("cp /var/log/ad.log /var/log/ad_django.log", shell=True)
+                subprocess.call("cp logs/ad.log logs/ad_django.log", shell=True)
                 text = "It may take few seconds to destroy the environment, Thank You"
                 return(render(request, "result2.html", {"htmlcode": "DJANGO", "html": "DESTROYED", "text": text }))
         
@@ -198,7 +198,7 @@ def result(request):
                 subprocess.call("docker exec -it django /bin/bash", shell=True)
                 return(render(request, "thankyou.html"))
         
-            elif (text2=='connectivity'):
+            '''elif (text2=='connectivity'):
                 print("========================================================")
                 test = subprocess.check_output("docker network inspect django_project_docker_django_network | grep -A 4 django | grep IPv4Address", shell=True, universal_newlines=True)
                 s1 = re.compile(r'[0-9.]+/')
@@ -213,18 +213,18 @@ def result(request):
                 print("Django container logs as below : ")
                 subprocess.call("docker logs django", shell=True)
                 print("========================================================")
-                return(render(request, "thankyou.html"))
+                return(render(request, "thankyou.html"))'''
         
         elif (text1=='elk'):
             if (text2=='create'):
-                subprocess.call("echo | tee /var/log/ad.log; cd automation_devops/elk_project_docker && docker-compose up -d &", shell=True)
+                subprocess.call("echo | tee logs/ad.log; cd automation_devops/elk_project_docker && docker-compose up -d &", shell=True)
                 text1 = "Default port for Elasticsearch is 9200. Type <IP>:9200 in the browser to access Elasticsearch"
                 text2 = "Default port for Kibana is 5601. Type <IP>:5601 in the browser to access Kibana"
                 return(render(request, "result1.html", {"htmlcode": "ELK Stack", "html": "CREATED", "text1": text1, "text2": text2 }))
 
             elif (text2=='destroy'):
                 subprocess.call("cd automation_devops/elk_project_docker && docker-compose down --rmi all &", shell=True)
-                subprocess.call("cp /var/log/ad.log /var/log/ad_elk.log", shell=True)
+                subprocess.call("cp logs/ad.log logs/ad_elk.log", shell=True)
                 text = "It may take few seconds to destroy the environment, Thank You"
                 return(render(request, "result2.html", {"htmlcode": "ELK Stack", "html": "DESTROYED", "text": text }))
         
@@ -232,7 +232,7 @@ def result(request):
                 subprocess.call("docker exec -it elasticsearch /bin/bash", shell=True)
                 return(render(request, "thankyou.html"))
         
-            elif (text2=='connectivity'):
+            '''elif (text2=='connectivity'):
                 test = subprocess.check_output("docker network inspect elk_project_docker_elk_network | grep -A 4 elasticsearch | grep IPv4Address", shell=True, universal_newlines=True)
                 s1 = re.compile(r'[0-9.]+/')
                 m1 = s1.search(test)
@@ -281,11 +281,11 @@ def result(request):
                 print("Filebeat container logs as below : ")
                 subprocess.call("docker logs filebeat", shell=True)
                 print("========================================================")
-                return(render(request, "thankyou.html"))
+                return(render(request, "thankyou.html"))'''
         
         elif (text1=='prometheus'):
             if (text2=='create'):
-                subprocess.call("echo | tee /var/log/ad.log; cd automation_devops/prometheus_project_docker && docker-compose up -d &", shell=True)
+                subprocess.call("echo | tee logs/ad.log; cd automation_devops/prometheus_project_docker && docker-compose up -d &", shell=True)
                 text1 = "Default port for Prometheus is 9090. Type <IP>:9090 in the browser to access Prometheus"
                 text2 = "Default port for Node Exporter is 9100. Type <IP>:9100 in the browser to access Node Exporter"
                 text3 = "Default port for Grafana is 3000. Type <IP>:3000 in the browser to access Grafana"
@@ -293,7 +293,7 @@ def result(request):
             
             elif (text2=='destroy'):
                 subprocess.call("cd automation_devops/prometheus_project_docker && docker-compose down --rmi all &", shell=True)
-                subprocess.call("cp /var/log/ad.log /var/log/ad_prometheus.log", shell=True)
+                subprocess.call("cp logs/ad.log logs/ad_prometheus.log", shell=True)
                 text = "It may take few seconds to destroy the environment, Thank You"
                 return(render(request, "result2.html", {"htmlcode": "Prometheus, Node Exporter and Grafana", "html": "DESTROYED", "text": text }))
 
@@ -301,7 +301,7 @@ def result(request):
                 subprocess.call("docker exec -it prometheus /bin/bash", shell=True)
                 return(render(request, "thankyou.html"))
 
-            elif (text2=='connectivity'):
+            '''elif (text2=='connectivity'):
                 test = subprocess.check_output("docker network inspect prometheus_project_docker_pg_network | grep -A 4 prometheus | grep IPv4Address", shell=True, universal_newlines=True)
                 s1 = re.compile(r'[0-9.]+/')
                 m1 = s1.search(test)
@@ -338,11 +338,11 @@ def result(request):
                 print("Node Exporter container logs as below : ")
                 subprocess.call("docker logs node_exporter", shell=True)
                 print("========================================================")
-                return(render(request, "thankyou.html"))
+                return(render(request, "thankyou.html"))'''
         
         elif (text1=='mysql'):
             if (text2=='create'):
-                subprocess.call("echo | tee /var/log/ad.log; cd automation_devops/mysql_project_docker && docker-compose up -d &", shell=True)
+                subprocess.call("echo | tee logs/ad.log; cd automation_devops/mysql_project_docker && docker-compose up -d &", shell=True)
                 text1 = "Port for phpMyAdmin is 82. Type <IP>:82 in the browser to access phpMyAdmin"
                 text2 = "Login to MySQL to work on it"
                 return(render(request, "result1.html", {"htmlcode": "MySQL", "html": "CREATED", "text1": text1, "text2": text2 }))
@@ -350,14 +350,14 @@ def result(request):
             elif (text2=='destroy'):
                 text = "It may take few seconds to destroy the environment, Thank You"
                 subprocess.call("cd automation_devops/mysql_project_docker && docker-compose down --rmi all &", shell=True)
-                subprocess.call("cp /var/log/ad.log /var/log/ad_mysql.log", shell=True)
+                subprocess.call("cp logs/ad.log logs/ad_mysql.log", shell=True)
                 return(render(request, "result2.html", {"htmlcode": "MySQL", "html": "DESTROYED", "text": text }))
         
             elif (text2=='connect'):
                 subprocess.call("docker exec -it sp-mysql /bin/bash", shell=True)
                 return(render(request, "thankyou.html"))
         
-            elif (text2=='connectivity'):
+            '''elif (text2=='connectivity'):
                 test = subprocess.check_output("docker network inspect mysql_project_docker_mysql_network | grep -A 4 sp_phpmyadmin | grep IPv4Address", shell=True, universal_newlines=True)
                 s1 = re.compile(r'[0-9.]+/')
                 m1 = s1.search(test)
@@ -383,17 +383,17 @@ def result(request):
                 print("PHP Admin container logs as below : ")
                 subprocess.call("docker logs sp_phpmyadmin", shell=True)
                 print("========================================================")
-                return(render(request, "thankyou.html"))
+                return(render(request, "thankyou.html"))'''
         
         elif (text1=='jenkins'):
             if (text2=='create'):
-                subprocess.call("echo | tee /var/log/ad.log; cd automation_devops/jenkins_project_docker && docker-compose up -d &", shell=True)
+                subprocess.call("echo | tee logs/ad.log; cd automation_devops/jenkins_project_docker && docker-compose up -d &", shell=True)
                 text1 = "Default port for Jenkins is 8080. Type <IP>:8080 in the browser to access Jenkins"
                 return(render(request, "result1.html", {"htmlcode": "Jenkins", "html": "CREATED", "text1": text1 }))
 
             elif (text2=='destroy'):
                 subprocess.call("cd automation_devops/jenkins_project_docker && docker-compose down --rmi all &", shell=True)
-                subprocess.call("cp /var/log/ad.log /var/log/ad_jenkins.log", shell=True)
+                subprocess.call("cp logs/ad.log logs/ad_jenkins.log", shell=True)
                 text = "It may take few seconds to destroy the environment, Thank You"
                 return(render(request, "result2.html", {"htmlcode": "Jenkins", "html": "DESTROYED", "text": text }))
         
@@ -401,7 +401,7 @@ def result(request):
                 subprocess.call("docker exec -it jenkinsserver /bin/bash", shell=True)
                 return(render(request, "thankyou.html"))
         
-            elif (text2=='connectivity'):
+            '''elif (text2=='connectivity'):
                 test = subprocess.check_output("docker network inspect jenkins_project_docker_jenkins_network | grep -A 4 jenkinsserver | grep IPv4Address", shell=True, universal_newlines=True)
                 s1 = re.compile(r'[0-9.]+/')
                 m1 = s1.search(test)
@@ -416,17 +416,17 @@ def result(request):
                 print("Jenkins container logs as below : ")
                 subprocess.call("docker logs jenkinsserver", shell=True)
                 print("========================================================")
-                return(render(request, "thankyou.html"))
+                return(render(request, "thankyou.html"))'''
         
         elif (text1=='terraform'):
             if (text2=='create'):
-                subprocess.call("echo | tee /var/log/ad.log; cd automation_devops/terraform_project_docker && docker-compose up -d &", shell=True)
+                subprocess.call("echo | tee logs/ad.log; cd automation_devops/terraform_project_docker && docker-compose up -d &", shell=True)
                 text1 = "Terraform environment is getting created, Login to work on it"
                 return(render(request, "result1.html", {"htmlcode": "Terraform", "html": "CREATED", "text1": text1 }))
 
             elif (text2=='destroy'):
                 subprocess.call("cd automation_devops/terraform_project_docker && docker-compose down --rmi all &", shell=True)
-                subprocess.call("cp /var/log/ad.log /var/log/ad_terraform.log", shell=True)
+                subprocess.call("cp logs/ad.log logs/ad_terraform.log", shell=True)
                 text = "It may take few seconds to destroy the environment, Thank You"
                 return(render(request, "result2.html", {"htmlcode": "Terraform", "html": "DESTROYED", "text": text }))
 
@@ -434,7 +434,7 @@ def result(request):
                 subprocess.call("docker exec -it terraform /bin/bash", shell=True)
                 return(render(request, "thankyou.html"))
         
-            elif (text2=='connectivity'):
+            '''elif (text2=='connectivity'):
                 print("========================================================")
                 print("Terraform is not running as service, hence it will not open any port. It is just Software.")
                 print("========================================================")
@@ -445,7 +445,7 @@ def result(request):
                 print("Terraform container logs as below : ")
                 subprocess.call("docker logs terraform", shell=True)
                 print("========================================================")
-                return(render(request, "thankyou.html"))
+                return(render(request, "thankyou.html"))'''
 
 
         # html generated code is coming from this function

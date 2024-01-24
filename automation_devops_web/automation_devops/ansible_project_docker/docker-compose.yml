@@ -2,7 +2,7 @@ version: "3.7"
 
 services:
   ansibleserver:
-    image: siddharthpatel1/ansiblemanagenode:v1
+    image: siddharthpatel1/ansiblenode:v1
     container_name: ansibleserver
     restart: unless-stopped
     #ports:
