@@ -137,8 +137,8 @@ def setupad():
     print("**************Completed the Work****************")
 
 def startad():
-    subprocess.check_output("mkdir logs", shell=True, universal_newlines=True)
-    subprocess.call("python3 manage.py runserver 0.0.0.0:8001 | sudo tee logs/ad.log", shell=True, universal_newlines=True)
+    #subprocess.check_output("rm -rf logs && mkdir logs && touch logs/ad.log", shell=True, universal_newlines=True)
+    subprocess.call("python3 manage.py runserver 0.0.0.0:8001", shell=True, universal_newlines=True)
 
 def stopad():
     print ("==============================================================================")
