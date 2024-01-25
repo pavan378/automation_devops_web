@@ -144,43 +144,43 @@ def stopad():
     print ("==============================================================================")
     
     print("Checking for containers")
-    a = subprocess.check_output("docker ps -a | grep -v NAME | wc -l", shell=True, universal_newlines=True) 
+    a = subprocess.check_output("sudo docker ps -a | grep -v NAME | wc -l", shell=True, universal_newlines=True) 
     if (int(a.strip()) == 0):
         print("No Containers running")
     elif (int(a.strip()) != 0):
         print ("One or more containers running, killing all containers")
         countdown(2)
-        subprocess.call("docker ps -a | grep -v NAMES | awk {'print $1'} | xargs docker rm -f", shell=True, universal_newlines=True)
+        subprocess.call("sudo docker ps -a | grep -v NAMES | awk {'print $1'} | xargs sudo docker rm -f", shell=True, universal_newlines=True)
     print ("==============================================================================")
     
     print("Checking for images")
-    b = subprocess.check_output("docker images | grep -v SIZE | wc -l", shell=True, universal_newlines=True)
+    b = subprocess.check_output("sudo docker images | grep -v SIZE | wc -l", shell=True, universal_newlines=True)
     if (int(b.strip()) == 0):
          print("No images")
     elif (int(b.strip()) != 0):
         print ("Killing all images")
         countdown(2)
-        subprocess.call("docker images | grep -v SIZE | awk {'print $3'} | xargs docker rmi -f", shell=True, universal_newlines=True)
+        subprocess.call("sudo docker images | grep -v SIZE | awk {'print $3'} | xargs sudo docker rmi -f", shell=True, universal_newlines=True)
     print ("==============================================================================")
 
     print("Checking for volumes")
-    c = subprocess.check_output("docker volume ls | grep -v NAME | wc -l", shell=True, universal_newlines=True)
+    c = subprocess.check_output("sudo docker volume ls | grep -v NAME | wc -l", shell=True, universal_newlines=True)
     if (int(c.strip()) == 0):
          print("No Volumes")
     elif (int(c.strip()) != 0):
         print ("Killing all volumes")
         countdown(2)
-        subprocess.call("docker volume ls | grep -v NAME | awk {'print $2'} | xargs docker volume rm", shell=True, universal_newlines=True)
+        subprocess.call("sudo docker volume ls | grep -v NAME | awk {'print $2'} | xargs sudo docker volume rm", shell=True, universal_newlines=True)
     print ("==============================================================================")
 
     print ("Checking for networks")
-    d = subprocess.check_output("docker network ls | grep -v NAME | awk {'print $2'} | grep -v bridge | grep -v none | grep -v host | wc -l", shell=True, universal_newlines=True)
+    d = subprocess.check_output("sudo docker network ls | grep -v NAME | awk {'print $2'} | grep -v bridge | grep -v none | grep -v host | wc -l", shell=True, universal_newlines=True)
     if (int(d.strip()) == 0):
          print("No Networks")
     elif (int(d.strip()) != 0):
         print("Killing the networks")
         countdown(2)
-        subprocess.call("docker network ls | grep -v NAME | awk {'print $2'} | grep -v bridge | grep -v none | grep -v host | xargs docker network rm", shell=True, universal_newlines=True)
+        subprocess.call("sudo docker network ls | grep -v NAME | awk {'print $2'} | grep -v bridge | grep -v none | grep -v host | xargs sudo docker network rm", shell=True, universal_newlines=True)
     print ("==============================================================================")
     
     print ("Checking Program")
@@ -206,36 +206,36 @@ def statusad():
 
     print ("==============================================================================")
     
-    b = subprocess.check_output("docker ps -a | grep -v NAME | wc -l", shell=True, universal_newlines=True)
+    b = subprocess.check_output("sudo docker ps -a | grep -v NAME | wc -l", shell=True, universal_newlines=True)
     if (int(b.strip()) == 0):
          print("No Containers running")
     elif (int(b.strip()) != 0):
         print ("CONTAINER ID of containers running")
-        subprocess.call("docker ps -a | grep -v NAMES | awk {'print $1'}", shell=True, universal_newlines=True)
+        subprocess.call("sudo docker ps -a | grep -v NAMES | awk {'print $1'}", shell=True, universal_newlines=True)
     print ("==============================================================================")
     
-    c = subprocess.check_output("docker images | grep -v SIZE | wc -l", shell=True, universal_newlines=True) 
+    c = subprocess.check_output("sudo docker images | grep -v SIZE | wc -l", shell=True, universal_newlines=True) 
     if (int(c.strip()) == 0):
          print("No images")
     elif (int(c.strip()) != 0):
         print ("Images present in this box")
-        subprocess.call("docker images | grep -v SIZE | awk {'print $1\":\"$2'}", shell=True, universal_newlines=True)
+        subprocess.call("sudo docker images | grep -v SIZE | awk {'print $1\":\"$2'}", shell=True, universal_newlines=True)
     print ("==============================================================================")
     
-    d = subprocess.check_output("docker volume ls | grep -v NAME | wc -l", shell=True, universal_newlines=True)
+    d = subprocess.check_output("sudo docker volume ls | grep -v NAME | wc -l", shell=True, universal_newlines=True)
     if (int(d.strip()) == 0):
          print("No Volumes")
     elif (int(d.strip()) != 0):
         print ("Volumes present in this box")
-        subprocess.call("docker volume ls | grep -v NAME | awk {'print $2'}", shell=True, universal_newlines=True)
+        subprocess.call("sudo docker volume ls | grep -v NAME | awk {'print $2'}", shell=True, universal_newlines=True)
     print ("==============================================================================")
 
-    e = subprocess.check_output("docker network ls | grep -v NAME | awk {'print $2'} | grep -v bridge | grep -v none | grep -v host | wc -l", shell=True, universal_newlines=True)
+    e = subprocess.check_output("sudo docker network ls | grep -v NAME | awk {'print $2'} | grep -v bridge | grep -v none | grep -v host | wc -l", shell=True, universal_newlines=True)
     if (int(e.strip()) == 0):
          print("No Networks")
     elif (int(e.strip()) != 0):
         print ("Networks present in this box")
-        subprocess.call("docker network ls | grep -v NAME | awk {'print $2'} | grep -v bridge | grep -v none | grep -v host", shell=True, universal_newlines=True)
+        subprocess.call("sudo docker network ls | grep -v NAME | awk {'print $2'} | grep -v bridge | grep -v none | grep -v host", shell=True, universal_newlines=True)
     print ("==============================================================================")
 
 if __name__=="__main__":
